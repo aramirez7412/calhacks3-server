@@ -19,8 +19,8 @@ class EdgeDetectionTraversal {
         //instatiate an edge detector object
         EdgeDetection detector = new EdgeDetection();
 
-        detector.setLowThreshold(2f);
-        detector.setHighThreshold(3f);
+        detector.setLowThreshold(8f);
+        detector.setHighThreshold(10f);
 
         try {
 //            Rectangle quad = new Rectangle();
@@ -46,9 +46,14 @@ class EdgeDetectionTraversal {
             File f = new File(System.getProperty("user.dir") + "/upload-dir/final" + fileName);
             ImageIO.write(edges, fileType, f);
 
+
+            EdgeDetection.removeBackground(fileName);
+
         } catch (IOException e) {
             System.out.println("\nInside catch block");
             System.out.println("[ERROR] " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

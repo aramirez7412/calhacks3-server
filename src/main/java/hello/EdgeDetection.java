@@ -4,7 +4,10 @@
 
 package hello;
 
-import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.*;
+import java.io.File;
 import java.util.Arrays;
 
 
@@ -483,16 +486,6 @@ public class EdgeDetection {
 
                 System.out.println("--------------------------------------------------------------------------------");
                 System.out.println("TYPE_INT_RGB");
-                //For testing
-//                System.out.println("P value: " + p);
-//                System.out.println("R value: " + r);
-//
-//                System.out.println("G value: " + g);
-//
-//                System.out.println("B value: " + b);
-                //testing
-
-
                 data[i] = luminance(r, g, b);
             }
         } else if (type == BufferedImage.TYPE_BYTE_GRAY) {
@@ -567,5 +560,60 @@ public class EdgeDetection {
         edgesImage.getWritableTile(0, 0).setDataElements(0, 0, width, height, pixels);
     }
 
+    public static void removeBackground(String fileName) throws Exception {
 
+//        File in = new File("C:\\Users\\Christoffer\\Desktop\\christoffer.jpg");
+        String fileType = "";
+        if (fileName.contains("png")) {
+            fileType = "png";
+        } else if (fileName.contains("jpg")) {
+            fileType = "jpg";
+        } else if (fileName.contains("jpeg")) {
+            fileType = "jpeg";
+        }
+        File in = new File(System.getProperty("user.dir") + "/upload-dir/final" + fileName);
+        BufferedImage source = ImageIO.read(in);
+
+        int color = source.getRGB(0, 0);
+
+        Image image = makeColorTransparent(source, new Color(color));
+
+        BufferedImage transparent = imageToBufferedImage(image);
+
+        File out = new File(System.getProperty("user.dir") + "/upload-dir/" + "removed_" + fileName);
+        ImageIO.write(transparent, fileType, out);
+
+    }
+
+    private static BufferedImage imageToBufferedImage(Image image) {
+
+        BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = bufferedImage.createGraphics();
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+
+        return bufferedImage;
+
+    }
+
+    public static Image makeColorTransparent(BufferedImage im, final Color color) {
+        ImageFilter filter = new RGBImageFilter() {
+
+            // the color we are looking for... Alpha bits are set to opaque
+            public int markerRGB = color.getRGB() | 0xFF000000;
+
+            public final int filterRGB(int x, int y, int rgb) {
+                if ((rgb | 0xFF000000) == markerRGB) {
+                    // Mark the alpha bits as zero - transparent
+                    return 0x00FFFFFF & rgb;
+                } else {
+                    // nothing to do
+                    return rgb;
+                }
+            }
+        };
+
+        ImageProducer ip = new FilteredImageSource(im.getSource(), filter);
+        return Toolkit.getDefaultToolkit().createImage(ip);
+    }
 }

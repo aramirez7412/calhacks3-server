@@ -59,6 +59,7 @@ public class FileUploadController {
         redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
 
         System.out.println("[ File Upload Controller ] " + file.getOriginalFilename());
+//        EdgeDetectionTraversal edgeDetectionTraversal = new EdgeDetectionTraversal(file.getOriginalFilename());
         EdgeDetectionTraversal edgeDetectionTraversal = new EdgeDetectionTraversal(file.getOriginalFilename());
 
         return "redirect:/";
