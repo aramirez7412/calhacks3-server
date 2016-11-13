@@ -13,10 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
@@ -32,15 +28,10 @@ public class FileUploadController {
 
     @GetMapping("/")
     public String listUploadedFiles(Model model) throws IOException {
-
-        model.addAttribute("files", storageService
-                .loadAll()
-                .map(path ->
-                        MvcUriComponentsBuilder
-                                .fromMethodName(FileUploadController.class, "serveFile", path.getFileName().toString())
-                                .build().toString())
+        model.addAttribute("files", storageService.loadAll().map(path -> MvcUriComponentsBuilder
+                .fromMethodName(FileUploadController.class, "serveFile", path.getFileName().toString())
+                .build().toString())
                 .collect(Collectors.toList()));
-
         return "uploadForm";
     }
 
@@ -55,13 +46,20 @@ public class FileUploadController {
                 .body(file);
     }
 
+    @GetMapping("/test/{filename:.+}")
+    @ResponseBody
+    public void runVisualRecognition(@PathVariable String filename) {
+        EdgeDetectionTraversal edgeDetectionTraversal = new EdgeDetectionTraversal(filename);
+    }
+
     @PostMapping("/")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         storageService.store(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
+        redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+        System.out.println("[ File Upload Controller ] " + file.getOriginalFilename());
+        EdgeDetectionTraversal edgeDetectionTraversal = new EdgeDetectionTraversal(file.getOriginalFilename());
 
         return "redirect:/";
     }

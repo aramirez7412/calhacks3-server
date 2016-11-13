@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.Arrays;
 
 
-public class edgeDetection {
+public class EdgeDetection {
 
     // statics
 
@@ -44,7 +44,7 @@ public class edgeDetection {
      * Constructs a new detector with default parameters.
      */
 
-    public edgeDetection() {
+    public EdgeDetection() {
         lowThreshold = 2.5f;
         highThreshold = 7.5f;
         gaussianKernelRadius = 2f;
@@ -362,7 +362,7 @@ public class edgeDetection {
                 float nwMag = hypot(xGradient[indexNW], yGradient[indexNW]);
                 float tmp;
                 /*
-				 * An explanation of what's happening here, for those who want
+                 * An explanation of what's happening here, for those who want
 				 * to understand the source: This performs the "non-maximal
 				 * supression" phase of the Canny edge detection in which we
 				 * need to compare the gradient magnitude to that in the
@@ -481,13 +481,15 @@ public class edgeDetection {
                 int g = (p & 0xff00) >> 8;
                 int b = p & 0xff;
 
+                System.out.println("--------------------------------------------------------------------------------");
+                System.out.println("TYPE_INT_RGB");
                 //For testing
-                System.out.println("P value: " + p);
-                System.out.println("R value: " + r);
-
-                System.out.println("G value: " + g);
-
-                System.out.println("B value: " + b);
+//                System.out.println("P value: " + p);
+//                System.out.println("R value: " + r);
+//
+//                System.out.println("G value: " + g);
+//
+//                System.out.println("B value: " + b);
                 //testing
 
 
@@ -496,6 +498,7 @@ public class edgeDetection {
         } else if (type == BufferedImage.TYPE_BYTE_GRAY) {
             byte[] pixels = (byte[]) sourceImage.getData().getDataElements(0, 0, width, height, null);
             for (int i = 0; i < picsize; i++) {
+                System.out.println("--------------------------------------------------------------------------------");
                 System.out.println("Inside TYPE_BYTE_GRAY");
 
                 data[i] = (pixels[i] & 0xff);
@@ -504,7 +507,7 @@ public class edgeDetection {
             short[] pixels = (short[]) sourceImage.getData().getDataElements(0, 0, width, height, null);
             for (int i = 0; i < picsize; i++) {
 
-
+                System.out.println("--------------------------------------------------------------------------------");
                 System.out.println("Inside TYPE_USHORT_GRAY");
 
                 data[i] = (pixels[i] & 0xffff) / 256;
@@ -512,6 +515,8 @@ public class edgeDetection {
         } else if (type == BufferedImage.TYPE_3BYTE_BGR) {
             byte[] pixels = (byte[]) sourceImage.getData().getDataElements(0, 0, width, height, null);
             int offset = 0;
+            System.out.println("--------------------------------------------------------------------------------");
+            System.out.println("Inside TYPE_3BYTE_BGR");
 
             //Colored images reach this block with current testing experience
 
