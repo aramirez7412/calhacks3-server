@@ -1,13 +1,11 @@
-package hello;
 /**
  * Created by anthonyramirez on 11/12/16.
  */
+
+package hello;
+
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-import java.io.*;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
 
 
 public class edgeDetection {
@@ -169,7 +167,7 @@ public class edgeDetection {
      * values is deemed negligable, so this is actually a maximum radius.
      *
      * @param gaussianKernelWidth a radius for the convolution operation in
-     * pixels, at least 2.
+     *                            pixels, at least 2.
      */
 
     public void setGaussianKernelWidth(int gaussianKernelWidth) {
@@ -214,8 +212,9 @@ public class edgeDetection {
 
     /**
      * Sets whether the contrast is normalized
+     *
      * @param contrastNormalized true if the contrast should be normalized,
-     * false otherwise
+     *                           false otherwise
      */
 
     public void setContrastNormalized(boolean contrastNormalized) {
@@ -233,7 +232,7 @@ public class edgeDetection {
         if (contrastNormalized) normalizeContrast();
         computeGradients(gaussianKernelRadius, gaussianKernelWidth);
         int low = Math.round(lowThreshold * MAGNITUDE_SCALE);
-        int high = Math.round( highThreshold * MAGNITUDE_SCALE);
+        int high = Math.round(highThreshold * MAGNITUDE_SCALE);
         performHysteresis(low, high);
         thresholdEdges();
         writeEdges(data);
@@ -292,7 +291,7 @@ public class edgeDetection {
                 float sumY = sumX;
                 int xOffset = 1;
                 int yOffset = width;
-                for(; xOffset < kwidth ;) {
+                for (; xOffset < kwidth; ) {
                     sumY += kernel[xOffset] * (data[index - yOffset] + data[index + yOffset]);
                     sumX += kernel[xOffset] * (data[index - xOffset] + data[index + xOffset]);
                     yOffset += width;
@@ -362,7 +361,7 @@ public class edgeDetection {
                 float swMag = hypot(xGradient[indexSW], yGradient[indexSW]);
                 float nwMag = hypot(xGradient[indexNW], yGradient[indexNW]);
                 float tmp;
-				/*
+                /*
 				 * An explanation of what's happening here, for those who want
 				 * to understand the source: This performs the "non-maximal
 				 * supression" phase of the Canny edge detection in which we
@@ -446,7 +445,7 @@ public class edgeDetection {
         int x0 = x1 == 0 ? x1 : x1 - 1;
         int x2 = x1 == width - 1 ? x1 : x1 + 1;
         int y0 = y1 == 0 ? y1 : y1 - 1;
-        int y2 = y1 == height -1 ? y1 : y1 + 1;
+        int y2 = y1 == height - 1 ? y1 : y1 + 1;
 
         data[i1] = magnitude[i1];
         for (int x = x0; x <= x2; x++) {
@@ -492,7 +491,6 @@ public class edgeDetection {
                 //testing
 
 
-
                 data[i] = luminance(r, g, b);
             }
         } else if (type == BufferedImage.TYPE_BYTE_GRAY) {
@@ -524,7 +522,6 @@ public class edgeDetection {
                 data[i] = luminance(r, g, b);
 
 
-
                 System.out.println("Inside TYPE_3BYTE_GRAY");
 
             }
@@ -543,8 +540,8 @@ public class edgeDetection {
         int j = 0;
         for (int i = 0; i < histogram.length; i++) {
             sum += histogram[i];
-            int target = sum*255/picsize;
-            for (int k = j+1; k <=target; k++) {
+            int target = sum * 255 / picsize;
+            for (int k = j + 1; k <= target; k++) {
                 remap[k] = i;
             }
             j = target;
@@ -564,7 +561,6 @@ public class edgeDetection {
         }
         edgesImage.getWritableTile(0, 0).setDataElements(0, 0, width, height, pixels);
     }
-
 
 
 }
