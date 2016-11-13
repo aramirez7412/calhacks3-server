@@ -23,7 +23,6 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
-.idea/vcs.xml
 .idea/workspace.xml
 .idea/uiDesigner.xml
 ### JetBrains template
