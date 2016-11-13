@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import numpy as np
+import os
 import argparse
+import shutil
 import cv2
 
 
@@ -79,3 +81,5 @@ if __name__ == "__main__":
     parser.add_argument('file', help='File to process')
     args = parser.parse_args()
     segment('upload-dir/' + args.file)
+    os.remove('upload-dir/' +args.file)
+    shutil.move('output/' + args.file, 'upload-dir/'+args.file)
