@@ -62,30 +62,19 @@ public class FileUploadController {
 //        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(base64Image);
 //        byte[] imageBytes = javax.xml.bind.DatatypeConverter.parseBase64Binary(file);
         storageService.store(file);
+
+
+
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+
+
+
 
         return "redirect:/";
     }
 
-    @RestController
-    @RequestMapping(value = "/upload")
-    public class UploadController {
-        @RequestMapping(value = "", method = RequestMethod.POST)
-        public void uploadFile(@RequestParam(value = "name") final String name, @RequestParam("file") MultipartFile file, HttpServletResponse response) {
-            try {
-                if (!file.isEmpty()) {
-                    byte[] bytes = file.getBytes();
-                    BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(new File(name + ".mp3")));
-                    outputStream.write(bytes);
-                    outputStream.close();
-                    response.setStatus(HttpServletResponse.SC_NO_CONTENT);
-                }
-            } catch (Exception e) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            }
-        }
-    }
 
     @ExceptionHandler(StorageFileNotFoundException.class)
     public ResponseEntity handleStorageFileNotFound(StorageFileNotFoundException exc) {
