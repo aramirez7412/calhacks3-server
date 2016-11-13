@@ -1,5 +1,9 @@
+#!/usr/bin/env python
+
 import numpy as np
+import argparse
 import cv2
+
 
 def getSobel (channel):
 
@@ -70,5 +74,8 @@ def segment (path):
     cv2.imwrite('output/' + fname, img);
     print (path)
 
-
-segment('upload-dir/test.png')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Process image to remove background.')
+    parser.add_argument('file', help='File to process')
+    args = parser.parse_args()
+    segment('upload-dir/' + args.file)

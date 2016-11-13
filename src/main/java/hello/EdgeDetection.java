@@ -582,7 +582,6 @@ public class EdgeDetection {
 
         File out = new File(System.getProperty("user.dir") + "/upload-dir/" + "removed_" + fileName);
         ImageIO.write(transparent, fileType, out);
-
     }
 
     private static BufferedImage imageToBufferedImage(Image image) {
@@ -593,7 +592,6 @@ public class EdgeDetection {
         g2.dispose();
 
         return bufferedImage;
-
     }
 
     public static Image makeColorTransparent(BufferedImage im, final Color color) {

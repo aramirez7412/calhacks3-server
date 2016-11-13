@@ -47,7 +47,8 @@ class EdgeDetectionTraversal {
             ImageIO.write(edges, fileType, f);
 
 
-            EdgeDetection.removeBackground(fileName);
+            Process p = Runtime.getRuntime().exec("python segmentation1.py");
+//            EdgeDetection.removeBackground(fileName);
 
         } catch (IOException e) {
             System.out.println("\nInside catch block");
