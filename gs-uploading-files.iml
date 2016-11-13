@@ -68,5 +68,27 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-library:1.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.skyscreamer:jsonassert:1.3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.3.4.RELEASE" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES />
+        <JAVADOC>
+          <root url="file://$USER_HOME$/Documents/imgsclr/imgscalr-lib-3.2-javadoc" />
+        </JAVADOC>
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$USER_HOME$/Documents/imgsclr" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/Documents/imgsclr" />
+        </SOURCES>
+        <jarDirectory url="file://$USER_HOME$/Documents/imgsclr" recursive="false" />
+        <jarDirectory url="file://$USER_HOME$/Documents/imgsclr" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
